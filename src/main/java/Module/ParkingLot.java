@@ -1,7 +1,6 @@
 package Module;
 
 import Interface.ISlot;
-
 import java.util.ArrayList;
 
 public class ParkingLot {
@@ -14,4 +13,7 @@ public class ParkingLot {
         }
     }
 
+    public ArrayList<ISlot> getSlots() {
+        return slots;
+    }
 }

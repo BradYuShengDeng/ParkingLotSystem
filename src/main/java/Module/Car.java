@@ -1,18 +1,26 @@
 package Module;
 
 import Interface.ICar;
-import Enum.Color;
 
 public class Car implements ICar {
 
-    private Long registrationNumber;
+    private String registrationNumber;
     private Color color;
 
-    public Long getRegistrationNumber() {
+    public enum Color{
+        RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, WHITE, GREY, BLACK, BROWN, PINK
+    }
+
+    public Car(String registrationNumber, Color color){
+        this.registrationNumber = registrationNumber;
+        this.color = color;
+    }
+
+    public String getRegistrationNumber() {
         return registrationNumber;
     }
 
-    public void setRegistrationNumber(Long registrationNumber) {
+    public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
 
