@@ -12,6 +12,8 @@ public class Slot implements ISlot {
         this.number = number;
     }
 
+    public Integer getNumber() { return number; }
+
     public ICar getCar() {
         return car;
     }

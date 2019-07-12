@@ -8,7 +8,7 @@ public class Car implements ICar {
     private Color color;
 
     public enum Color{
-        RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, WHITE, GREY, BLACK, BROWN, PINK
+        Red, Orange, Yellow, Green, Blue, Purple, White, Grey, Black, Brown, Pink
     }
 
     public Car(String registrationNumber, Color color){
