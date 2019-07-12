@@ -16,8 +16,8 @@ public class MainServiceTest {
     }
 
     @Test
-    public void testParkCar(){
-        ICar expectedCar = new Car("KA-01-HH-1234", Car.Color.BLACK);
+    public void testParkCar() throws Exception{
+        ICar expectedCar = new Car("KA-01-HH-1234", Car.Color.Black);
         ICar car = MainService.parkCar("KA-01-HH-1234", "Black");
 
         Assert.assertEquals(expectedCar, car);
@@ -32,7 +32,7 @@ public class MainServiceTest {
     }
 
     @Test
-    public void testGetRegistrationNumbersByColor(){
+    public void testGetRegistrationNumbersByColor() throws Exception{
         String[] expectedRegistrationNumbers = { "KA-01-HH-1234" };
         String[] registrationNumbers = MainService.getRegistrationNumbersByColor("Black");
 
@@ -40,7 +40,7 @@ public class MainServiceTest {
     }
 
     @Test
-    public void testGetSlotNumbersByColor(){
+    public void testGetSlotNumbersByColor() throws Exception{
         Integer[] expectedSlotNumbers = { 1 };
         Integer[] slotNumbers = MainService.getSlotNumbersByColor("Black");
 
@@ -48,15 +48,15 @@ public class MainServiceTest {
     }
 
     @Test
-    public void testGetSlotNumberByRegistrationNumber(){
+    public void testGetSlotNumberByRegistrationNumber() throws Exception{
         Integer slotNumber = MainService.getSlotNumberByRegistrationNumber("KA-01-HH-1234");
 
         Assert.assertEquals(1, slotNumber.intValue());
     }
 
     @Test
-    public void testLeaveCar(){
-        ICar expectedCar = new Car("KA-01-HH-1234", Car.Color.BLACK);
+    public void testLeaveCar() throws Exception{
+        ICar expectedCar = new Car("KA-01-HH-1234", Car.Color.Black);
         ICar car = MainService.leaveCar("1");
 
         Assert.assertEquals(expectedCar, car);
