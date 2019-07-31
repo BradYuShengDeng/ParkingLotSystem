@@ -1,34 +1,37 @@
 package Service;
 
-import Interface.ICar;
-import Module.Car;
 import Module.ParkingLot;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static Constant.MainConstant.*;
+
 public class MainServiceTest {
+
+    private ParkingLot parkingLot = null;
 
     @Test
     public void testCreateParkingLot(){
-        ParkingLot parkingLot = MainService.createParkingLot("6");
+        parkingLot = MainService.createParkingLot("6");
 
         Assert.assertEquals(6, parkingLot.getSlots().size());
     }
 
     @Test
     public void testParkCar() throws Exception{
-        ICar expectedCar = new Car("KA-01-HH-1234", Car.Color.Black);
-        ICar car = MainService.parkCar("KA-01-HH-1234", "Black");
+        Integer slotNumber = MainService.parkCar("KA-01-HH-1234", "Black");
 
-        Assert.assertEquals(expectedCar, car);
+        Assert.assertEquals(1, slotNumber.intValue()); // The first car to park in the parking lot.
     }
 
     @Test
-    public void testCheckStatus(){
-        String expectedStatus = "1  KA-01-HH-1234   Black";
+    public void testCheckStatus() throws Exception{
+        StringBuilder expectedStatus = new StringBuilder("Slot No.");
+        expectedStatus.append(SHORT_SPACE).append("Registration No.").append(SHORT_SPACE).append("Colour").append(NEW_LINE)
+                .append(1).append(LONG_SPACE).append("KA-01-HH-1234").append(SHORT_SPACE).append("Black").append(NEW_LINE);
         String status = MainService.checkStatus();
 
-        Assert.assertEquals(expectedStatus, status);
+        Assert.assertEquals(expectedStatus.toString(), status);
     }
 
     @Test
@@ -56,9 +59,8 @@ public class MainServiceTest {
 
     @Test
     public void testLeaveCar() throws Exception{
-        ICar expectedCar = new Car("KA-01-HH-1234", Car.Color.Black);
-        ICar car = MainService.leaveCar("1");
+        MainService.leaveCar("1");
 
-        Assert.assertEquals(expectedCar, car);
+        Assert.assertEquals(null, parkingLot.getSlots().get(1).getCar());
     }
 }
