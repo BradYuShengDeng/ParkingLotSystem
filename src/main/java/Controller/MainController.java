@@ -76,8 +76,8 @@ public class MainController {
                 return "Slot number " + segments[1] + " is free";
 
             case "status":
-                MainService.checkStatus();
-                break;
+                String status = MainService.checkStatus();
+                return status;
 
             case "registration_numbers_for_cars_with_colour":
                 String[] registrationNumbers = MainService.getRegistrationNumbersByColor(segments[1]);
