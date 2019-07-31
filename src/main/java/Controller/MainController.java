@@ -94,7 +94,7 @@ public class MainController {
                 return slotNumber != null ? String.valueOf(slotNumber) : "Not found";
 
             default:
-                System.out.println("Invalid command:" + segments[0]);
+                throw new Exception("Invalid command:" + segments[0]);
         }
     }
 }
