@@ -1,6 +1,5 @@
 package Service;
 
-import Interface.ICar;
 import Module.Car;
 import Module.ParkingLot;
 import Module.Slot;
@@ -16,7 +15,7 @@ public class MainService {
         return parkingLot;
     }
 
-    public static ICar parkCar(String registrationNumber, String color) throws Exception{
+    public static Integer parkCar(String registrationNumber, String color) throws Exception{
         if(parkingLot == null) {
             throw new Exception("There is no parking lot created.");
         }
@@ -26,22 +25,20 @@ public class MainService {
             if(slot.getCar() == null){ // Check if the slot is still available.
                 Car car = new Car(registrationNumber, Car.Color.valueOf(color));
                 slot.setCar(car);
-                return car;
+                return slot.getNumber();
             }
         }
         return null;
     }
 
-    public static ICar leaveCar(String slotNumber) throws Exception{
+    public static void leaveCar(String slotNumber) throws Exception{
         if(parkingLot == null) {
             throw new Exception("There is no parking lot created.");
         }
 
         ArrayList<Slot> slots = parkingLot.getSlots();
         Slot slot = slots.get(Integer.parseInt(slotNumber));
-        ICar car = slot.getCar();
         slot.setCar(null);
-        return car;
     }
 
     public static String checkStatus(){
