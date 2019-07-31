@@ -6,6 +6,8 @@ import Module.Slot;
 
 import java.util.ArrayList;
 
+import static Constant.MainConstant.*;
+
 public class MainService {
 
     private static ParkingLot parkingLot = null;
@@ -21,7 +23,7 @@ public class MainService {
         }
 
         ArrayList<Slot> slots = parkingLot.getSlots();
-        for (Slot slot : slots){ // Foreach loop will get slot by the order we put in the list.
+        for(Slot slot : slots){ // Foreach loop will get slot by the order we put in the list.
             if(slot.getCar() == null){ // Check if the slot is still available.
                 Car car = new Car(registrationNumber, Car.Color.valueOf(color));
                 slot.setCar(car);
@@ -41,8 +43,25 @@ public class MainService {
         slot.setCar(null);
     }
 
-    public static String checkStatus(){
-        return null;
+    public static String checkStatus() throws Exception{
+        if(parkingLot == null) {
+            throw new Exception("There is no parking lot created.");
+        }
+
+        StringBuilder status = new StringBuilder("Slot No.");
+        status.append(SHORT_SPACE).append("Registration No.").append(SHORT_SPACE).append("Colour").append(NEW_LINE);
+
+        ArrayList<Slot> slots = parkingLot.getSlots();
+        for(Slot slot : slots){
+            if(slot.getCar() != null){
+                int slotNumber = slot.getNumber().intValue();
+                Car car = (Car) slot.getCar();
+                String registrationNumber = car.getRegistrationNumber();
+                Car.Color color = car.getColor();
+                status.append(slotNumber).append(LONG_SPACE).append(registrationNumber).append(SHORT_SPACE).append(color).append(NEW_LINE);
+            }
+        }
+        return status.toString();
     }
 
     public static String[] getRegistrationNumbersByColor(String color) throws Exception{
