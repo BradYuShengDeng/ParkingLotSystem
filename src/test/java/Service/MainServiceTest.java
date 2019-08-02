@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import static Constant.MainConstant.*;
 
+/**
+ * Author: Brad Yu-Sheng Deng
+ * Version: 1.0.0
+ * Description: This is the service test based on Service.MainService.
+ */
 public class MainServiceTest {
 
     private ParkingLot parkingLot = null;

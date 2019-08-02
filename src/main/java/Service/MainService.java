@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import static Constant.MainConstant.*;
 
+/**
+ * Author: Brad Yu-Sheng Deng
+ * Version: 1.0.0
+ * Description: This is the service to deal with business needs.
+ */
 public class MainService {
 
     private static ParkingLot parkingLot = null;

@@ -3,6 +3,11 @@ package Module;
 import Interface.ICar;
 import Interface.ISlot;
 
+/**
+ * Author: Brad Yu-Sheng Deng
+ * Version: 1.0.0
+ * Description: Slot object in the parking lot
+ */
 public class Slot implements ISlot {
 
     private final Integer number;

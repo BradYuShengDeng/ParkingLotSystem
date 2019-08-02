@@ -8,8 +8,18 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * Author: Brad Yu-Sheng Deng
+ * Version: 1.0.0
+ * Description: This is the entrance for the application.
+ */
 public class MainController {
 
+    /**
+     * This is the main method to accept input either a command or the file.
+     * @param args : arguments from the application
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 
         if(args.length == 0){ // Interactive command prompt's part
@@ -58,6 +68,12 @@ public class MainController {
         }
     }
 
+    /**
+     * This method is to distinguish what kind of action it should take.
+     * @param command : single command
+     * @return : response message
+     * @throws Exception
+     */
     private static String takeActionByGoal(String command) throws Exception{
 
         String[] segments = command.split(MainConstant.BLANK);

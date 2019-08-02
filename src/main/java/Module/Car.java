@@ -2,11 +2,19 @@ package Module;
 
 import Interface.ICar;
 
+/**
+ * Author: Brad Yu-Sheng Deng
+ * Version: 1.0.0
+ * Description: Car object
+ */
 public class Car implements ICar {
 
     private String registrationNumber;
     private Color color;
 
+    /**
+     * Description: Colors from car
+     */
     public enum Color{
         Red, Orange, Yellow, Green, Blue, Purple, White, Grey, Black, Brown, Pink
     }
