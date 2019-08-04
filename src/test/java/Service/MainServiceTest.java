@@ -16,7 +16,7 @@ import static Constant.MainConstant.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MainServiceTest {
 
-    private ParkingLot parkingLot = null;
+    private static ParkingLot parkingLot = null;
 
     @Test
     public void testOrder1_CreateParkingLot(){

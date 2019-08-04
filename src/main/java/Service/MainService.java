@@ -80,7 +80,7 @@ public class MainService {
 
         for(Slot slot : slots){
             Car car = (Car) slot.getCar();
-            if(enumColor.equals(car.getColor())){
+            if(car != null && enumColor.equals(car.getColor())){
                 registrationNumbers.add(car.getRegistrationNumber());
             }
         }
@@ -98,7 +98,7 @@ public class MainService {
 
         for(Slot slot : slots){
             Car car = (Car) slot.getCar();
-            if(enumColor.equals(car.getColor())){
+            if(car != null && enumColor.equals(car.getColor())){
                 slotNumbers.add(slot.getNumber());
             }
         }
