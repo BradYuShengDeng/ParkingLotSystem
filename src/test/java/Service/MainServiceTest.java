@@ -36,7 +36,7 @@ public class MainServiceTest {
     public void testOrder3_CheckStatus() throws Exception{
         StringBuilder expectedStatus = new StringBuilder("Slot No.");
         expectedStatus.append(SHORT_SPACE).append("Registration No.").append(SHORT_SPACE).append("Colour").append(NEW_LINE)
-                .append(1).append(LONG_SPACE).append("KA-01-HH-1234").append(SHORT_SPACE).append("Black").append(NEW_LINE);
+                .append(SHORT_SPACE).append(1).append(LONG_SPACE).append("KA-01-HH-1234").append(SHORT_SPACE).append("Black").append(NEW_LINE);
         String status = MainService.checkStatus();
 
         Assert.assertEquals(expectedStatus.toString(), status);
