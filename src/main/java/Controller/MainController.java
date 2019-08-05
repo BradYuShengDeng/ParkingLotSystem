@@ -1,12 +1,14 @@
 package Controller;
 
-import Constant.MainConstant;
 import Module.ParkingLot;
 import Service.MainService;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import static Constant.MainConstant.*;
+import static Message.MainMessage.*;
 
 /**
  * Author: Brad Yu-Sheng Deng
@@ -36,19 +38,14 @@ public class MainController {
         }else if(args.length == 1){ // File as a parameter's part
 
             BufferedReader br = null;
-            BufferedWriter bw = null;
-
             try{
                 File f = new File(args[0]);
                 br = new BufferedReader(new FileReader(f));
-                File outputFile = new File("file_outputs.txt");
-                bw = new BufferedWriter(new FileWriter(outputFile));
                 String currentLine;
 
                 while((currentLine = br.readLine()) != null){
                     String result = MainController.takeActionByGoal(currentLine);
-                    bw.write(result);
-                    bw.write(System.getProperty("line.separator"));
+                    System.out.println(result);
                 }
 
             }catch(IOException e){
@@ -57,7 +54,6 @@ public class MainController {
             }finally{
                 try{
                     if(br != null) br.close();
-                    if(bw != null) bw.close();
                 }catch(IOException e){
                     e.printStackTrace();
                 }
@@ -76,41 +72,58 @@ public class MainController {
      */
     private static String takeActionByGoal(String command) throws Exception{
 
-        String[] segments = command.split(MainConstant.BLANK);
+        String[] segments = command.split(BLANK);
         String goal = segments[0];
-        switch(goal){
-            case "create_parking_lot":
-                ParkingLot parkingLot = MainService.createParkingLot(segments[1]);
-                return "Created a parking lot with " + parkingLot.getSlots().size() + " slots";
 
-            case "parking":
-                Integer number = MainService.parkCar(segments[1], segments[2]);
-                return number != null ? "Allocated slot number: " + number.intValue() : "Sorry, parking lot is full";
+        try {
+            switch (goal) {
+                case "create_parking_lot":
+                    if(segments.length != 2) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    ParkingLot parkingLot = MainService.createParkingLot(segments[1]);
+                    return "Created a parking lot with " + parkingLot.getSlots().size() + " slots";
 
-            case "leave":
-                MainService.leaveCar(segments[1]);
-                return "Slot number " + segments[1] + " is free";
+                case "park":
+                    if(segments.length != 3) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    Integer number = MainService.parkCar(segments[1], segments[2]);
+                    return number != null ? "Allocated slot number: " + number.intValue() : "Sorry, parking lot is full";
 
-            case "status":
-                String status = MainService.checkStatus();
-                return status;
+                case "leave":
+                    if(segments.length != 2) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    MainService.leaveCar(segments[1]);
+                    return "Slot number " + segments[1] + " is free";
 
-            case "registration_numbers_for_cars_with_colour":
-                String[] registrationNumbers = MainService.getRegistrationNumbersByColor(segments[1]);
-                String regNums = Arrays.toString(registrationNumbers);
-                return regNums.substring(1, regNums.length() -1);
+                case "status":
+                    if(segments.length != 1) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    String status = MainService.checkStatus();
+                    return status;
 
-            case "slot_numbers_for_cars_with_colour":
-                Integer[] slotNumbers = MainService.getSlotNumbersByColor(segments[1]);
-                String slotNums = Arrays.toString(slotNumbers);
-                return slotNums.substring(1, slotNums.length() -1);
+                case "registration_numbers_for_cars_with_colour":
+                    if(segments.length != 2) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    String[] registrationNumbers = MainService.getRegistrationNumbersByColor(segments[1]);
+                    String regNums = Arrays.toString(registrationNumbers);
+                    return registrationNumbers.length != 0 ? regNums.substring(1, regNums.length() - 1) : "Not found";
 
-            case "slot_number_for_registration_number":
-                Integer slotNumber = MainService.getSlotNumberByRegistrationNumber(segments[1]);
-                return slotNumber != null ? String.valueOf(slotNumber) : "Not found";
+                case "slot_numbers_for_cars_with_colour":
+                    if(segments.length != 2) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    Integer[] slotNumbers = MainService.getSlotNumbersByColor(segments[1]);
+                    String slotNums = Arrays.toString(slotNumbers);
+                    return slotNumbers.length != 0 ? slotNums.substring(1, slotNums.length() - 1) : "Not found";
 
-            default:
-                throw new Exception("Invalid command:" + segments[0]);
+                case "slot_number_for_registration_number":
+                    if(segments.length != 2) throw new IllegalArgumentException(MSG_ILLEGAL_ARGUMENT);
+                    Integer slotNumber = MainService.getSlotNumberByRegistrationNumber(segments[1]);
+                    return slotNumber != null ? String.valueOf(slotNumber) : "Not found";
+
+                default:
+                    throw new Exception(MSG_INVALID_COMMAND + segments[0]);
+            }
+
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if(errorMsg.startsWith("Error Msg:")) {
+                return errorMsg;
+            }
+            throw e;
         }
     }
 }
