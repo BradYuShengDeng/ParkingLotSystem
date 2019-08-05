@@ -16,7 +16,17 @@ public class Car implements ICar {
      * Description: Colors from car
      */
     public enum Color{
-        Red, Orange, Yellow, Green, Blue, Purple, White, Grey, Black, Brown, Pink
+        Red, Orange, Yellow, Green, Blue, Purple, White, Grey, Black, Brown, Pink;
+
+        public static boolean contains(String color){
+            Color[] colors = Color.values();
+            for(Color c : colors){
+                if(c.name().equals(color)){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public Car(String registrationNumber, Color color){
