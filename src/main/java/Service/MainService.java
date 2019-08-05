@@ -7,6 +7,7 @@ import Module.Slot;
 import java.util.ArrayList;
 
 import static Constant.MainConstant.*;
+import static Message.MainMessage.*;
 
 /**
  * Author: Brad Yu-Sheng Deng
@@ -23,9 +24,8 @@ public class MainService {
     }
 
     public static Integer parkCar(String registrationNumber, String color) throws Exception{
-        if(parkingLot == null) {
-            throw new Exception("There is no parking lot created.");
-        }
+        if(parkingLot == null) throw new Exception(MSG_NO_PARKING_LOT);
+        if(!Car.Color.contains(color)) throw new Exception(MSG_NO_SUCH_COLOR);
 
         ArrayList<Slot> slots = parkingLot.getSlots();
         for(Slot slot : slots){ // Foreach loop will get slot by the order we put in the list.
@@ -39,19 +39,18 @@ public class MainService {
     }
 
     public static void leaveCar(String slotNumber) throws Exception{
-        if(parkingLot == null) {
-            throw new Exception("There is no parking lot created.");
-        }
+        if(parkingLot == null) throw new Exception(MSG_NO_PARKING_LOT);
 
         ArrayList<Slot> slots = parkingLot.getSlots();
-        Slot slot = slots.get(Integer.parseInt(slotNumber));
+        int slotNo = Integer.parseInt(slotNumber);
+
+        if(slotNo < 1 || slotNo > slots.size()) throw new Exception(MSG_NO_SUCH_SLOT_NUMBER);
+        Slot slot = slots.get(slotNo - 1);
         slot.setCar(null);
     }
 
     public static String checkStatus() throws Exception{
-        if(parkingLot == null) {
-            throw new Exception("There is no parking lot created.");
-        }
+        if(parkingLot == null) throw new Exception(MSG_NO_PARKING_LOT);
 
         StringBuilder status = new StringBuilder("Slot No.");
         status.append(SHORT_SPACE).append("Registration No.").append(SHORT_SPACE).append("Colour").append(NEW_LINE);
@@ -63,16 +62,15 @@ public class MainService {
                 Car car = (Car) slot.getCar();
                 String registrationNumber = car.getRegistrationNumber();
                 Car.Color color = car.getColor();
-                status.append(slotNumber).append(LONG_SPACE).append(registrationNumber).append(SHORT_SPACE).append(color).append(NEW_LINE);
+                status.append(SHORT_SPACE).append(slotNumber).append(LONG_SPACE).append(registrationNumber).append(SHORT_SPACE).append(color).append(NEW_LINE);
             }
         }
         return status.toString();
     }
 
     public static String[] getRegistrationNumbersByColor(String color) throws Exception{
-        if(parkingLot == null) {
-            throw new Exception("There is no parking lot created.");
-        }
+        if(parkingLot == null) throw new Exception(MSG_NO_PARKING_LOT);
+        if(!Car.Color.contains(color)) throw new Exception(MSG_NO_SUCH_COLOR);
 
         Car.Color enumColor = Car.Color.valueOf(color);
         ArrayList<Slot> slots = parkingLot.getSlots();
@@ -88,9 +86,8 @@ public class MainService {
     }
 
     public static Integer[] getSlotNumbersByColor(String color) throws Exception{
-        if(parkingLot == null) {
-            throw new Exception("There is no parking lot created.");
-        }
+        if(parkingLot == null) throw new Exception(MSG_NO_PARKING_LOT);
+        if(!Car.Color.contains(color)) throw new Exception(MSG_NO_SUCH_COLOR);
 
         Car.Color enumColor = Car.Color.valueOf(color);
         ArrayList<Slot> slots = parkingLot.getSlots();
@@ -106,9 +103,7 @@ public class MainService {
     }
 
     public static Integer getSlotNumberByRegistrationNumber(String registrationNumber) throws Exception{
-        if(parkingLot == null) {
-            throw new Exception("There is no parking lot created.");
-        }
+        if(parkingLot == null) throw new Exception(MSG_NO_PARKING_LOT);
 
         ArrayList<Slot> slots = parkingLot.getSlots();
 
